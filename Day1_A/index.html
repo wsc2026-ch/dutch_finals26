@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Relics</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <a href="/"><img src="/mediafiles/logo.png" alt="Retro Relics Logo"><span class="sr-only">Retro Relics</span></a>
+    <ul>
+      <li><a href="#art"><img src="/mediafiles/icons/palette-solid-full.svg" alt="Palette icon" /><span>art</span></a></li>
+      <li><a href="#clothing"><img src="/mediafiles/icons/shirt-solid-full.svg" alt="Shirt icon" /><span>clothing</span></a></li>
+      <li><a href="#furniture"><img src="/mediafiles/icons/chair-solid-full.svg" alt="Chair icon" /><span>furniture</span></a></li>
+      <li><a href="#jewelry"><img src="/mediafiles/icons/gem-solid-full.svg" alt="Gem icon" /><span>jewelry</span></a></li>
+      <li><a href="#vehicle"><img src="/mediafiles/icons/car-solid-full.svg" alt="Car icon" /><span>vehicles</span></a></li>
+      <li><a href="#electronics"><img src="/mediafiles/icons/tv-solid-full.svg" alt="TV icon" /><span>electronics</span></a></li>
+    </ul>
+    <form id="search-form">
+      <label>
+        <img src="/mediafiles/icons/search.svg" alt="Search icon" />
+        <span class="sr-only">Search</span><input id="search" name="search" type="text">
+      </label>
+    </form>
+  </header>
+  <main>
+    <section id="featured"></section>
+    <section id="products"></section>
+  </main>
+  <template id="product-template">
+    <article>
+      <button class="favorite"><img src="/mediafiles/icons/heart-solid-full.svg" alt="Heart icon"><span class="sr-only">Favorite</span></button>
+      <img class="product-image" />
+      <div>
+        <h4></h4>
+        <p></p>
+        <div class="time-left">
+          <span>TIME LEFT</span>
+          <span></span>
+        </div>
+        <div class="product-footer">
+          <div class="current-bid">
+            <span>CURRENT BID</span>
+            <strong></strong>
+          </div>
+          <button class="open-button">OPEN</button>
+        </div>
+      </div>
+    </article>
+  </template>
+  <template id="product-overlay">
+    <article class="overlay">
+      <div class="description">
+        <img class="product-image" />
+        <h2></h2>
+        <p></p>
+        <div class="time-left">
+          <span>TIME LEFT</span>
+          <span></span>
+        </div>
+      </div>
+      <div class="bids">
+        <button class="close-overlay">CLOSE</button>
+        <ul></ul>
+        <form action="">
+          <label>
+            <span>Name</span>
+            <input required type="text" name="name" />
+          </label>
+          <label>
+            <span>Amount</span>
+            <input required type="number" name="amount" />
+          </label>
+          <input type="submit" value="Place bid" />
+        </form>
+      </div>
+    </article>
+  </template>
+
+  <script src="/script.js"></script>
+</body>
+</html>
