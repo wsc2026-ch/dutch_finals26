@@ -3,3 +3,7 @@
 ## Day1 A
 
 - [README.md](./Day1_A/README.md)
+
+## Day1 B
+
+- [README.md](./Day1_B/README.md)
