@@ -1,0 +1,1 @@
+SELECT SUM(amount) as total_donated FROM donations d JOIN campaign c ON d.campaign_id = c.id WHERE c.title = 'Donationweek' AND c.year = 2026;

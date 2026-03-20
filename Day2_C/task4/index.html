@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 40px auto;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        .filters {
+            margin-bottom: 16px;
+        }
+        .filters button {
+            margin: 4px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+        .product {
+            border: 1px solid #ccc;
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .product small {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Producten</h2>
+
+<div class="filters">
+    <button data-cat="all">Alles</button>
+    <button data-cat="fruit">Fruit</button>
+    <button data-cat="drank">Drank</button>
+    <button data-cat="snack">Snack</button>
+</div>
+
+<div id="list"></div>
+
+<script>
+    // TODO:
+    // 1. Create an array of products. Example
+    //    { name: 'Appel', category: 'fruit' }
+    //
+    // 2. Toon je eigen gemaakte lijst van producten in #lijst (nog zonder te filteren)
+    // 2. Show your own list of products in #lijst (without filtering)
+    //
+    // 3. If you press a filter button
+    //    - Filter the array
+    //    - Show only the chosen products of clicked button
+    //
+    // 4.When clicking on data-cat="all", show all
+
+    const products = [
+        { name: 'Apple', category: 'fruit' },
+        { name: 'Banana', category: 'fruit' },
+        { name: 'Water', category: 'drank' },
+        { name: 'Cola', category: 'drank' },
+        { name: 'Chips', category: 'snack' },
+        { name: 'Sweets', category: 'snack' },
+    ];
+    document.getElementById("list").innerText = products.map(p => p.name).join(", ")
+
+    document.querySelectorAll("button").forEach((b) => {
+        b.addEventListener("click", e => {
+            if (e.target.getAttribute("data-cat") == "all") {
+                document.getElementById("list").innerText = products.map(p => p.name).join(", ")
+            } else {
+                document.getElementById("list").innerText = products.filter(p => p.category === e.target.getAttribute("data-cat")).map(p => p.name).join(", ")
+            }
+        })
+    })
+</script>
+
+</body>
+</html>

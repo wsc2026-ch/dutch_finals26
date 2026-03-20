@@ -1,0 +1,1 @@
+SELECT * FROM news_messages WHERE publication_date < '2026-04-01 23:59:59' AND active = 1 ORDER BY publication_date;

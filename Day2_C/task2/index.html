@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vlag van Zwitserland</title>
+    <style>
+        body { font-family: arial, sans-serif; }
+        img {
+            width: 200px;
+        }
+        .flag {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background: rgb(218,37,21);
+        }
+
+        .horizontal {
+            background: white;
+            position: absolute;
+            inset: calc(50% - 19px) 38px;
+        }
+
+        .vertical {
+            background: white;
+            position: absolute;
+            inset: 38px calc(50% - 19px);
+        }
+    </style>
+</head>
+<body>
+
+<h2>Voorbeeld:</h2>
+<img src="/task2/swiss_flag.png" alt="Vlag van Zwitserland">
+
+<h3>Resultaat:</h3>
+<div class="flag">
+    <div class="cross">
+        <div class="vertical"></div>
+        <div class="horizontal"></div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Rekenmachine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 80px;
+        }
+        input, select, button {
+            font-size: 16px;
+            padding: 6px;
+            margin: 4px;
+        }
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🧮 Mini-rekenmachine</h2>
+
+<input type="number" id="number1" placeholder="Eerste getal">
+<select id="calc_method">
+    <option value="+">+</option>
+    <option value="-">−</option>
+    <option value="*">×</option>
+</select>
+<input type="number" id="number2" placeholder="Tweede getal">
+<button id="calculate">Bereken</button>
+
+<h2>Resultaat:</h2>
+<p id="result"></p>
+
+<script>
+document.getElementById("calculate").addEventListener("click", () => {
+    const x = Number(document.getElementById("number1").value);
+    const y = Number(document.getElementById("number2").value);
+    let result;
+    switch (document.getElementById("calc_method").value) {
+        case "+":
+            result = x + y;
+            break;
+        case "-":
+            result = x - y;
+            break;
+        case "*":
+            result = x * y;
+            break;
+    }
+    document.getElementById("result").innerText = result;
+})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Tabs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .tabs {
+            width: 600px;
+        }
+
+        .tabs input[type="radio"] {
+
+        }
+
+        .tabs label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ddd;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            margin-right: 2px;
+            transition: background 0.2s;
+        }
+
+        .tabs label:hover {
+            background: #ccc;
+        }
+
+        .content {
+            border: 1px solid #ddd;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 0 8px 8px 8px;
+        }
+
+        input {
+            display: none;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        #tab1:checked ~ .content > #content1 {
+            display: block;
+        }
+
+        #tab2:checked ~ .content > #content2 {
+            display: block;
+        }
+
+        #tab3:checked ~ .content > #content3 {
+            display: block;
+        }
+
+        #tab4:checked ~ .content > #content4 {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="tabs">
+    <input type="radio" id="tab1" name="tab" checked>
+    <label for="tab1">🌸 Lente</label>
+
+    <input type="radio" id="tab2" name="tab">
+    <label for="tab2">🌞 Zomer</label>
+
+    <input type="radio" id="tab3" name="tab">
+    <label for="tab3">🍁 Herfst</label>
+
+    <input type="radio" id="tab4" name="tab">
+    <label for="tab4">❄️ Winter</label>
+
+    <div class="content">
+        <div class="tab-content" id="content1">
+            <h3>🌸 Lente</h3>
+            <p>De natuur ontwaakt, bloemen bloeien en vogels fluiten.
+                De perfecte tijd voor frisse wandelingen en nieuwe energie.</p>
+        </div>
+
+        <div class="tab-content" id="content2">
+            <h3>☀️ Zomer</h3>
+            <p>De zon schijnt, de dagen zijn lang en iedereen leeft buiten.
+                Perfect voor strandwandelingen, barbecues en fietstochten.</p>
+        </div>
+
+        <div class="tab-content" id="content3">
+            <h3>🍂 Herfst</h3>
+            <p>De bladeren vallen, warme chocolademelk staat klaar en de natuur verandert in een zee van oranje en rood.
+                Tijd om te wandelen door het bos!</p>
+        </div>
+
+        <div class="tab-content" id="content4">
+            <h3>❄️ Winter</h3>
+            <p>Warme sjaals, koude neuzen en sneeuwvlokken in de lucht.
+                Tijd voor schaatsen, spelletjes en knus binnen blijven.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
