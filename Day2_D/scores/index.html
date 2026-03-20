@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cluck & Catch</title>
+</head>
+<body>
+  <main>
+    <a id="back" href="/"><img src="/mediafiles/images/close_white.png" alt="Cross" /></a>
+    <h1>SCORES</h1>
+    <ul id="SCORES">
+      <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
+      <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
+      <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
+      <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
+    </ul>
+  </main>
+  <style>
+    @font-face {
+      font-family: Freeman;
+      src: url("/mediafiles/fonts/Freeman-Regular.ttf") format("truetype");
+    }
+    :root {
+      --px: calc(0.001201923076923077 * 100vh);
+    }
+    body {
+      margin: 0;
+      background: #6E8C39;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Freeman, sans-serif;
+      font-size: calc(16 * var(--px));
+      height: 100vh;
+    }
+    main {
+      aspect-ratio: 3/2;
+      max-width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      background-image: url("/mediafiles/images/grass_scores.png");
+      background-repeat: no-repeat;
+      background-size: calc(352 * var(--px)) calc(52 * var(--px));
+      background-position: center calc(70 * var(--px));
+    }
+    #back {
+      width: calc(26 * var(--px));
+      height: calc(26 * var(--px));
+      position: absolute;
+      top: calc(58 * var(--px));
+      right: calc(68 * var(--px));
+    }
+    #back img {
+      width: 100%;
+      height: 100%;
+    }
+    h1 {
+      margin: calc(100 * var(--px)) 0 calc(55 * var(--px));
+      font-size: calc(32 * var(--px));
+      line-height: 1.081;
+    }
+    ul {
+      width: calc(535 * var(--px));
+      padding: 0;
+      margin: 0;
+      border-bottom: var(--px) solid rgb(255 255 255 / 0.2);
+    }
+    li {
+      border-top: var(--px) solid rgb(255 255 255 / 0.2);
+      display: flex;
+      align-items: center;
+      padding: calc(23 * var(--px)) calc(12 * var(--px));
+      font-size: calc(19 * var(--px));
+      line-height: 1.081;
+    }
+    li :first-child {
+      margin-right: calc(34 * var(--px));
+    }
+    li :last-child {
+      margin-left: auto;
+    }
+  </style>
+</body>
+</html>

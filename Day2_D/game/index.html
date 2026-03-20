@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cluck & Catch</title>
+</head>
+<body>
+  <main>
+    <div id="eggs-counter">
+      <span>EGGS:</span>
+      <span id="eggs">0</span>
+    </div>
+    <div id="highscore-counter">
+      <span>HIGHSCORE:</span>
+      <span id="highscore">0</span>
+    </div>
+    <div id="lives">
+      <img src="/mediafiles/images/heard_filled.png" />
+      <img src="/mediafiles/images/heard_filled.png" />
+      <img src="/mediafiles/images/heard_filled.png" />
+    </div>
+    <img id="chicken" src="/mediafiles/images/chicken.gif" />
+    <div id="eggbox">
+    </div>
+    <div id="gameover">
+      <h2>GAME OVER</h2>
+      <lead>WITH <span id="gameoverEggs">0</span> EGGS, YOU'RE <span id="gameoverPlacement">1ST</span>!</lead>
+      <ul id="scores">
+        <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
+        <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
+      </ul>
+      <button id="gameoverPlayAgain">PLAY AGAIN</button>
+      <a id="gameoverBack" href="/">BACK TO START</a>
+    </div>
+  </main>
+  <template id="gameoverRowTemplate">
+    <li id="you"><span>1</span><input id="gameoverInput" type="text" placeholder="YOUR NAME"/><button id="gameoverButton">SAVE</button></li>
+  </template>
+  <style>
+    @font-face {
+      font-family: Freeman;
+      src: url("/mediafiles/fonts/Freeman-Regular.ttf") format("truetype");
+    }
+    :root {
+      --px: calc(0.001201923076923077 * 100vh);
+    }
+    body {
+      margin: 0;
+      background: #6E8C39;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Freeman, sans-serif;
+      font-size: calc(16 * var(--px));
+        line-height: 1.081;
+      height: 100vh;
+    }
+    main {
+      aspect-ratio: 3/2;
+      max-width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      color: white;
+      background-image: url("/mediafiles/images/background.png");
+      background-size: cover;
+    }
+    #eggs-counter {
+      position: absolute;
+      top: calc(52 * var(--px));
+      left: calc(60 * var(--px));
+      display: flex;
+      align-items: end;
+    }
+    #eggs-counter :first-child {
+      font-size: calc(31 * var(--px));
+      margin-right: calc(11 * var(--px));
+    }
+    #eggs {
+      font-size: calc(39 * var(--px));
+    }
+    #highscore-counter {
+      position: absolute;
+      top: calc(62 * var(--px));
+      right: calc(200 * var(--px));
+      display: flex;
+      align-items: end;
+    }
+    #highscore-counter :first-child {
+      font-size: calc(19 * var(--px));
+      opacity: 0.5;
+      margin-right: calc(7 * var(--px));
+    }
+    #highscore {
+      font-size: calc(22 * var(--px));
+      opacity: 0.5;
+    }
+    #lives {
+      position: absolute;
+      top: calc(58 * var(--px));
+      right: calc(60 * var(--px));
+      display: flex;
+      gap: calc(10 * var(--px));
+    }
+    #lives img {
+      width: calc(30 * var(--px));
+      height: calc(30 * var(--px));
+    }
+    #chicken {
+      position: absolute;
+      top: calc(85 * var(--px));
+      width: calc(179 * var(--px));
+      height: calc(155 * var(--px));
+    }
+    #chicken.reversed {
+      transform: scaleX(-1);
+    }
+    #eggbox {
+      position: absolute;
+      bottom: calc(57 * var(--px));
+      left: calc(538 * var(--px));
+      width: calc(187 * var(--px));
+      height: calc(82 * var(--px));
+      background-image: url("/mediafiles/images/eggbox.png");
+      background-size: cover;
+      display: flex;
+      padding-left: calc(18 * var(--px));
+      gap: calc(2 * var(--px));
+    }
+    #eggbox img {
+      width: calc(41 * var(--px));
+      height: calc(58 * var(--px));
+      margin-top: calc(-12 * var(--px));
+    }
+    #eggbox img:nth-child(n + 5) {
+      display: none;
+    }
+    @keyframes eggSpin {
+      0% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    main > .egg {
+      position: absolute;
+      width: calc(41 * var(--px));
+      height: calc(58 * var(--px));
+      animation: eggSpin 1s linear infinite;
+    }
+    #gameover {
+      background: white;
+      position: absolute;
+      top: calc(156 * var(--px));
+      left: calc(372 * var(--px));
+      width: calc(535 * var(--px));
+      height: calc(483 * var(--px));
+      border-radius: calc(10 * var(--px));
+      box-shadow: inset 0px calc(-5 * var(--px)) 0px 0px #CDCDCD;
+      padding: calc(36 * var(--px)) calc(30 * var(--px)) calc(39 * var(--px));
+      flex-direction: column;
+      align-items: center;
+      display: none;
+    }
+    #gameover.shown {
+      display: flex;
+    }
+    #gameover h2 {
+      margin: 0 0 calc(11 * var(--px));
+      font-size: calc(38 * var(--px));
+      color: #FF4D4D;
+    }
+    #gameover lead {
+      color: black;
+      font-size: calc(22 * var(--px));
+    }
+    #gameover ul {
+      margin: calc(35 * var(--px)) 0 0;
+      padding: 0;
+      width: 100%;
+      border-bottom: var(--px) solid rgb(0 0 0 / .1);
+    }
+    #gameover li {
+      border-top: var(--px) solid rgb(0 0 0 / 0.1);
+      display: flex;
+      align-items: center;
+      padding: calc(2 * var(--px)) calc(12 * var(--px)) calc(4 * var(--px));
+      font-size: calc(17 * var(--px));
+      color: rgb(0 0 0 / .6)
+    }
+    #gameover li span {
+      padding: calc(13 * var(--px)) 0;
+    }
+    #gameover li :first-child {
+      margin-right: calc(34 * var(--px));
+    }
+    #gameover li :last-child {
+      margin-left: auto;
+    }
+    #gameoverPlayAgain {
+      background-color: #F47E23;
+      padding: calc(13 * var(--px)) calc(27 * var(--px));
+      margin-top: calc(36 * var(--px));
+      outline: none;
+      border: none;
+      border-radius: calc(10 * var(--px));
+      font-size: calc(34 * var(--px));
+      color: white;
+      cursor: pointer;
+      box-shadow: inset 0px calc(-5 * var(--px)) 0px 0px #DE6313, inset 0px calc(5 * var(--px)) 0px 0px #FCB04C;
+    }
+    #gameoverBack {
+      margin-top: calc(24 * var(--px));
+      font-size: calc(22 * var(--px));
+      color: black;
+      text-decoration: none;
+    }
+    #gameoverInput {
+      box-shadow: inset 0px calc(4 * var(--px)) 0px 0px #D3D3D3;
+      background-color: #E5E5E5;
+      border-radius: calc(10 * var(--px));
+      font-size: calc(17 * var(--px));
+      padding: calc(13 * var(--px));
+      width: 100%;
+      outline: none;
+      border: none;
+    }
+    #gameoverInput::placeholder {
+      font-family: Freeman, sans-serif;
+      opacity: 30%;
+      color: black;
+    }
+    #gameoverButton {
+      margin-left: calc(40 * var(--px)) !important;
+      background-color: #F47E23;
+      padding: calc(13 * var(--px)) calc(20 * var(--px));
+      outline: none;
+      border: none;
+      border-radius: calc(10 * var(--px));
+      font-size: calc(17 * var(--px));
+      color: white;
+      cursor: pointer;
+      box-shadow: inset 0px calc(-4 * var(--px)) 0px 0px #DE6313, inset 0px calc(5 * var(--px)) 0px 0px #FCB04C;
+    }
+  </style>
+  <script>
+    const getPos = (x) => x / 832 * document.body.getBoundingClientRect().height;
+    const calcEggSpeed = (total) => (50 * (832 - 180)) / total;
+    const chickenElem = document.getElementById("chicken");
+    const eggsElem = document.getElementById("eggs");
+    const highscoreElem = document.getElementById("highscore");
+    const livesElem = document.getElementById("lives");
+    const eggboxElem = document.getElementById("eggbox");
+    const mainElem = document.querySelector("main");
+
+    let chickenDirection = 10;
+    let chickenPos = 0;
+    let chickenMoveInterval;
+
+    let eggDelay = 2000;
+    let eggTimeToBottom = 1500;
+    let eggTimeout;
+    
+    let lives = 3;
+    let score = 0;
+    let highscore = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => a.score - b.score)[0]?.score || 0;
+    highscoreElem.innerText = highscore;
+
+    let eggboxPos = 538;
+    let eggboxMoveLeft = false;
+    let eggboxMoveRight = false;
+    let eggboxMoveInterval;
+    document.addEventListener("keydown", (e) => {
+      if (e.key == "ArrowLeft") {
+        eggboxMoveLeft = true;
+      }
+      if (e.key == "ArrowRight") {
+        eggboxMoveRight = true;
+      }
+    });
+    document.addEventListener("keyup", (e) => {
+      if (e.key == "ArrowLeft") {
+        eggboxMoveLeft = false;
+      }
+      if (e.key == "ArrowRight") {
+        eggboxMoveRight = false;
+      }
+    });
+    document.getElementById("gameoverPlayAgain").addEventListener("click", () => {
+      document.getElementById("gameover").classList.remove("shown");
+      lives = 3;
+      score = 0;
+      highscore = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => a.score - b.score)[0]?.score || 0;
+      eggDelay = 2000;
+      eggTimeToBottom = 1500;
+      chickenDirection = 10;
+      chickenPos = 0;
+      eggboxPos = 538;
+      livesElem.querySelectorAll("img").forEach(img => img.src = "/mediafiles/images/heard_filled.png");
+      chickenElem.classList.remove("reversed");
+      eggboxElem.innerHTML = "";
+      start();
+    });
+
+    const showGameOver = () => {
+      document.getElementById("gameover").classList.add("shown");
+      document.getElementById("gameoverEggs").innerText = score;
+      const scores = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => a.score - b.score)
+      let placement = [].findIndex(i => i.score < score);
+      if (placement == -1) {
+        placement = scores.length;
+      }
+      if (placement == 0) {
+        document.getElementById("gameoverPlacement").innerText = "1ST";
+      } else if (placement == 1) {
+        document.getElementById("gameoverPlacement").innerText = "2ND";
+      } else if (placement == 2) {
+        document.getElementById("gameoverPlacement").innerText = "3RD";
+      } else {
+        document.getElementById("gameoverPlacement").innerText = (placement + 1) + "TH";
+      }
+      const parent = document.querySelector("#gameover ul");
+      parent.innerHTML = "";
+      let li;
+      if (placement > 0) {
+        li = document.createElement("li");
+        let span = document.createElement("span");
+        span.innerText = placement;
+        li.appendChild(span);
+        span = document.createElement("span");
+        span.innerText = scores[placement - 1].name.toUpperCase();
+        li.appendChild(span);
+        span = document.createElement("span");
+        span.innerText = scores[placement - 1].score + " EGGS";
+        li.appendChild(span);
+        parent.appendChild(li);
+      }
+      li = document.getElementById("gameoverRowTemplate").content.cloneNode(true);
+      li.querySelector("span").innerText = placement + 1;
+      li.getElementById("gameoverButton").addEventListener("click", () => {
+        localStorage.setItem("scores", JSON.stringify(scores.slice(0, placement).concat([{ name: document.getElementById("gameoverInput").value, score }]).concat(scores.slice(placement))))
+      });
+      parent.appendChild(li);
+      if (placement < scores.length) {
+        li = document.createElement("li");
+        let span = document.createElement("span");
+        span.innerText = placement;
+        li.appendChild(span);
+        span = document.createElement("span");
+        span.innerText = scores[placement].name.toUpperCase();
+        li.appendChild(span);
+        span = document.createElement("span");
+        span.innerText = scores[placement].score + " EGGS";
+        li.appendChild(span);
+        parent.appendChild(li);
+      }
+    }
+
+    const moveEgg = (eggElem, eggPos) => {
+      eggPos += calcEggSpeed(eggTimeToBottom)
+      eggElem.style.top = getPos(eggPos) + "px";
+      if (eggPos > 832) {
+        // egg at bottom
+        mainElem.removeChild(eggElem);
+        lives -= 1;
+        livesElem.querySelector('[src="/mediafiles/images/heard_filled.png"]').src = "/mediafiles/images/heard_open.png";
+        if (lives == 0) {
+          clearInterval(chickenMoveInterval);
+          clearInterval(eggboxMoveInterval);
+          clearTimeout(eggTimeout);
+          showGameOver();
+        }
+        if (eggTimeToBottom > 400) {
+          eggTimeToBottom -= 100;
+        }
+        if (eggDelay > 200) {
+          eggDelay -= 100;
+        }
+      } else if (eggPos > 693 && eggPos < 693 + 82 && eggElem.getBoundingClientRect().left + getPos(41) > eggboxElem.getBoundingClientRect().left && eggElem.getBoundingClientRect().right - getPos(41) < eggboxElem.getBoundingClientRect().right) {
+        mainElem.removeChild(eggElem);
+        eggboxElem.appendChild(eggElem);
+        score += 1;
+        eggsElem.innerText = score;
+        if (score > highscore) {
+          highscoreElem.innerText = score;
+        }
+        if (eggTimeToBottom > 400) {
+          eggTimeToBottom -= 100;
+        }
+        if (eggDelay > 200) {
+          eggDelay -= 100;
+        }
+      } else if (lives > 0) {
+        setTimeout(() => moveEgg(eggElem, eggPos), 50);
+      }
+    }
+    const spawnEgg = () => {
+      const eggElem = document.createElement("img");
+      eggElem.src = "/mediafiles/images/egg_white.png";
+      eggElem.classList.add("egg");
+      eggElem.style.left = (chickenDirection < 0 ? chickenElem.getBoundingClientRect().right : chickenElem.getBoundingClientRect().left) - mainElem.getBoundingClientRect().left + "px";
+      mainElem.appendChild(eggElem);
+      const eggPos = 180;
+      eggElem.style.top = getPos(eggPos) + "px";
+      setTimeout(() => moveEgg(eggElem, eggPos), 50);
+      eggTimeout = setTimeout(spawnEgg, eggDelay)
+    };
+    const start = () => {
+      chickenMoveInterval = setInterval(() => {
+        chickenPos += chickenDirection;
+        if (chickenPos > 1070) {
+          chickenDirection = -10;
+          chickenElem.classList.add("reversed");
+        } else if (chickenPos < 0) {
+          chickenDirection = 10;
+          chickenElem.classList.remove("reversed");
+        }
+        chickenElem.style.left = getPos(chickenPos) + "px";
+      }, 50);
+      eggboxMoveInterval = setInterval(() => {
+        if (eggboxMoveLeft) {
+          eggboxPos -= 10;
+        }
+        if (eggboxMoveRight) {
+          eggboxPos += 10;
+        }
+        if (eggboxPos < 0) {
+          eggboxPos = 0;
+        }
+        if (eggboxPos > 1048) {
+          eggboxPos = 1048;
+        }
+        eggboxElem.style.left = getPos(eggboxPos) + "px";
+      }, 50);
+      eggTimeout = setTimeout(spawnEgg, eggDelay);
+    };
+    start();
+  </script>
+</body>
+</html>

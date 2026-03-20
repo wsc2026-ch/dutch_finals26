@@ -12,3 +12,7 @@
 ## Day2 C
 
 - [README.md](./Day2_C/README.md)
+
+## Day2 D
+
+- [README.md](./Day2_C/README.md)
