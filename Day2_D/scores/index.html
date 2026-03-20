@@ -9,7 +9,7 @@
   <main>
     <a id="back" href="/"><img src="/mediafiles/images/close_white.png" alt="Cross" /></a>
     <h1>SCORES</h1>
-    <ul id="SCORES">
+    <ul id="scores">
       <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
       <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
       <li><span>1</span><span>SONNY</span><span>32 EGGS</span></li>
@@ -86,5 +86,24 @@
       margin-left: auto;
     }
   </style>
+  <script>
+    const parent = document.querySelector("#scores");
+    parent.innerHTML = "";
+    const scores = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => b.score - a.score).slice(0, 7);
+    let li;
+    scores.forEach((score, i) => {
+      li = document.createElement("li");
+      let span = document.createElement("span");
+      span.innerText = i + 1;
+      li.appendChild(span);
+      span = document.createElement("span");
+      span.innerText = score.name.toUpperCase();
+      li.appendChild(span);
+      span = document.createElement("span");
+      span.innerText = score.score + " EGGS";
+      li.appendChild(span);
+      parent.appendChild(li);
+    });
+  </script>
 </body>
 </html>

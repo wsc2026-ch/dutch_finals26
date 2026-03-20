@@ -154,6 +154,7 @@
       animation: eggSpin 1s linear infinite;
     }
     #gameover {
+      z-index: 1;
       background: white;
       position: absolute;
       top: calc(156 * var(--px));
@@ -268,7 +269,7 @@
     
     let lives = 3;
     let score = 0;
-    let highscore = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => a.score - b.score)[0]?.score || 0;
+    let highscore = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => b.score - a.score)[0]?.score || 0;
     highscoreElem.innerText = highscore;
 
     let eggboxPos = 538;
@@ -295,7 +296,7 @@
       document.getElementById("gameover").classList.remove("shown");
       lives = 3;
       score = 0;
-      highscore = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => a.score - b.score)[0]?.score || 0;
+      highscore = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => b.score - a.score)[0]?.score || 0;
       eggDelay = 2000;
       eggTimeToBottom = 1500;
       chickenDirection = 10;
@@ -304,14 +305,16 @@
       livesElem.querySelectorAll("img").forEach(img => img.src = "/mediafiles/images/heard_filled.png");
       chickenElem.classList.remove("reversed");
       eggboxElem.innerHTML = "";
+      mainElem.querySelectorAll(".egg").forEach((e) => mainElem.removeChild(e));
+      eggsElem.innerText = "0";
       start();
     });
 
     const showGameOver = () => {
       document.getElementById("gameover").classList.add("shown");
       document.getElementById("gameoverEggs").innerText = score;
-      const scores = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => a.score - b.score)
-      let placement = [].findIndex(i => i.score < score);
+      const scores = (JSON.parse(localStorage.getItem("scores")) || []).sort((a, b) => b.score - a.score);
+      let placement = scores.findIndex(i => i.score < score);
       if (placement == -1) {
         placement = scores.length;
       }
@@ -343,13 +346,25 @@
       li = document.getElementById("gameoverRowTemplate").content.cloneNode(true);
       li.querySelector("span").innerText = placement + 1;
       li.getElementById("gameoverButton").addEventListener("click", () => {
-        localStorage.setItem("scores", JSON.stringify(scores.slice(0, placement).concat([{ name: document.getElementById("gameoverInput").value, score }]).concat(scores.slice(placement))))
+        const name = document.getElementById("gameoverInput").value
+        localStorage.setItem("scores", JSON.stringify(scores.slice(0, placement).concat([{ name, score }]).concat(scores.slice(placement))))
+        li = document.getElementById("you");
+        li.innerHTML = "";
+        let span = document.createElement("span");
+        span.innerText = placement + 1;
+        li.appendChild(span);
+        span = document.createElement("span");
+        span.innerText = name.toUpperCase();
+        li.appendChild(span);
+        span = document.createElement("span");
+        span.innerText = score + " EGGS";
+        li.appendChild(span);
       });
       parent.appendChild(li);
       if (placement < scores.length) {
         li = document.createElement("li");
         let span = document.createElement("span");
-        span.innerText = placement;
+        span.innerText = placement + 2;
         li.appendChild(span);
         span = document.createElement("span");
         span.innerText = scores[placement].name.toUpperCase();
@@ -413,10 +428,10 @@
     const start = () => {
       chickenMoveInterval = setInterval(() => {
         chickenPos += chickenDirection;
-        if (chickenPos > 1070) {
+        if (chickenPos > 600 + Math.random() * 400) {
           chickenDirection = -10;
           chickenElem.classList.add("reversed");
-        } else if (chickenPos < 0) {
+        } else if (chickenPos < Math.random() * 400) {
           chickenDirection = 10;
           chickenElem.classList.remove("reversed");
         }
@@ -436,7 +451,7 @@
           eggboxPos = 1048;
         }
         eggboxElem.style.left = getPos(eggboxPos) + "px";
-      }, 50);
+      }, 10);
       eggTimeout = setTimeout(spawnEgg, eggDelay);
     };
     start();
